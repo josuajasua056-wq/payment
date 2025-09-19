@@ -47,8 +47,8 @@
   <div class="card">
     <h1>Pembayaran QRIS DANA</h1>
     <div class="qris">
-      <!-- Gambar QRIS -->
-      <img src="qris.png" alt="QRIS Payment">
+      <!-- Gambar QRIS langsung dari link -->
+      <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS Payment">
     </div>
     <div class="info">
       Nomor DANA: 085714353387
