@@ -3,56 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment QRIS DANA</title>
+  <title>Pembayaran QRIS DANA</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, red, white);
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff0000, #ffffff);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      color: #222;
+      min-height: 100vh;
     }
     .card {
       background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      text-align: center;
-      padding: 30px;
-      max-width: 400px;
-      width: 90%;
-    }
-    .card h1 {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #e60000;
-    }
-    .qris img {
-      width: 100%;
-      max-width: 300px;
+      padding: 25px;
       border-radius: 15px;
-      border: 3px solid #e60000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
     }
-    .info {
-      margin-top: 20px;
+    h2 {
+      color: #e60000;
+      margin-bottom: 15px;
+    }
+    img {
+      width: 250px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .dana-box {
+      background: #f8f8f8;
+      padding: 10px;
+      border-radius: 8px;
       font-size: 18px;
       font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #e60000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #b30000;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Pembayaran QRIS DANA</h1>
-    <div class="qris">
-      <!-- Gambar QRIS langsung dari link -->
-      <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS Payment">
-    </div>
-    <div class="info">
+    <h2>Pembayaran QRIS DANA</h2>
+    <!-- QRIS base64 -->
+    <img src="data:image/png;base64,
+    iVBORw0KGgoAAAANSUhEUgAAA... (disingkat karena panjang) ..." 
+    alt="QRIS DANA">
+    
+    <div class="dana-box">
       Nomor DANA: 085714353387
     </div>
+    <button onclick="copyDana()">Copy Nomor DANA</button>
   </div>
+
+  <script>
+    function copyDana() {
+      navigator.clipboard.writeText("085714353387").then(() => {
+        alert("Nomor DANA berhasil disalin!");
+      });
+    }
+  </script>
 </body>
 </html>
