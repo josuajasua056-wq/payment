@@ -1,14 +1,21 @@
-body {
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment DANA & QRIS</title>
+  <style>
+    body {
       font-family: 'Segoe UI', Arial, sans-serif;
       background: linear-gradient(135deg, #4facfe, #00f2fe);
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      color: #333;
+      margin: 0;
     }
 
-    .container {
+    .card {
       background: #fff;
       padding: 30px;
       border-radius: 20px;
@@ -24,3 +31,78 @@ body {
       margin-bottom: 15px;
       color: #007bff;
     }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .qris-img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .qris-img:hover {
+      transform: scale(1.05);
+    }
+
+    .info-box {
+      background: #f5f5f5;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #007bff;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Payment DANA & QRIS</h1>
+    <p>Silakan scan QRIS di bawah untuk melakukan pembayaran:</p>
+    <img class="qris-img" src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS">
+    
+    <div class="info-box">
+      <p><span class="highlight">Nomor DANA:</span><br>085714353387</p>
+    </div>
+
+    <button onclick="copyDana()">Copy Nomor DANA</button>
+  </div>
+
+  <script>
+    function copyDana() {
+      navigator.clipboard.writeText("085714353387");
+      alert("Nomor DANA berhasil disalin!");
+    }
+  </script>
+</body>
+</html>
