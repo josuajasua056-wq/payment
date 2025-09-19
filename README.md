@@ -1,108 +1,58 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Payment DANA & QRIS</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment QRIS DANA</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      min-height: 100vh;
+      background: linear-gradient(135deg, red, white);
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #ff0000, #ffffff);
+      height: 100vh;
+      color: #222;
     }
-
     .card {
       background: #fff;
       border-radius: 20px;
-      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      padding: 30px;
       max-width: 400px;
       width: 90%;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      animation: fadeIn 0.8s ease-in-out;
     }
-
-    h2 {
-      color: #d60000;
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: #333;
+    .card h1 {
       margin-bottom: 20px;
+      font-size: 24px;
+      color: #e60000;
     }
-
-    .info {
-      background: #f7f7f7;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      font-size: 16px;
-      text-align: left;
-    }
-
-    .info strong {
-      color: #d60000;
-    }
-
-    button {
-      background: #d60000;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #fff;
-      color: #d60000;
-      border: 2px solid #d60000;
-    }
-
     .qris img {
-      margin-top: 20px;
-      width: 220px;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 300px;
+      border-radius: 15px;
+      border: 3px solid #e60000;
     }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
+    .info {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>Payment DANA & QRIS</h2>
-    <p>Silakan scan QRIS di bawah untuk melakukan pembayaran:</p>
-
-    <div class="info">
-      <strong>Nomor DANA:</strong><br>
-      085714353387
-    </div>
-
-    <button onclick="copyText()">Copy Nomor DANA</button>
-
+    <h1>Pembayaran QRIS DANA</h1>
     <div class="qris">
-      <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS Payment" />
+      <!-- Gambar QRIS -->
+      <img src="qris.png" alt="QRIS Payment">
+    </div>
+    <div class="info">
+      Nomor DANA: 085714353387
     </div>
   </div>
-
-  <script>
-    function copyText() {
-      navigator.clipboard.writeText("085714353387");
-      alert("Nomor DANA berhasil disalin!");
-    }
-  </script>
 </body>
 </html>
