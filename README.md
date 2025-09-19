@@ -39,7 +39,8 @@
 
     .qris-img {
       width: 100%;
-      max-width: 300px;
+      max-width: 280px;
+      margin: 15px 0;
       border-radius: 15px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.2);
       transition: transform 0.3s ease;
@@ -89,8 +90,10 @@
   <div class="card">
     <h1>Payment DANA & QRIS</h1>
     <p>Silakan scan QRIS di bawah untuk melakukan pembayaran:</p>
+
+    <!-- Gambar QRIS -->
     <img class="qris-img" src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS">
-    
+
     <div class="info-box">
       <p><span class="highlight">Nomor DANA:</span><br>085714353387</p>
     </div>
