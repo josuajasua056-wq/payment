@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway - QRIS & E-Wallet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--light);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #cce6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .payment-content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px;
+        }
+
+        .payment-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .payment-methods {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--success);
+            display: inline-block;
+        }
+
+        .amount-input {
+            margin: 25px 0;
+        }
+
+        .amount-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .amount-input input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .amount-input input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.5);
+        }
+
+        .payment-details {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .payment-details p {
+            margin: 12px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .payment-details span {
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .method {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .method:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(67, 97, 238, 0.5);
+        }
+
+        .method.active {
+            background: rgba(67, 97, 238, 0.2);
+            border-color: var(--primary);
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .method-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .method-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .method-details {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .method.active .method-details {
+            display: block;
+        }
+
+        .qris-image {
+            max-width: 250px;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            border: 2px solid white;
+        }
+
+        .method-info {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .method-info a {
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .highlight {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .payment-content {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Payment Gateway</h1>
+            <p>Lakukan pembayaran dengan QRIS, Dana, Gopay, atau OVO</p>
+        </header>
+
+        <div class="payment-content">
+            <div class="payment-info">
+                <h2 class="section-title">Informasi Pembayaran</h2>
+                
+                <div class="amount-input">
+                    <label for="amount">Jumlah Pembayaran (Rp):</label>
+                    <input type="number" id="amount" placeholder="Masukkan jumlah" min="1000" value="10000">
+                </div>
+
+                <div class="payment-details">
+                    <p>Metode Pembayaran: <span id="selected-method">Pilih metode</span></p>
+                    <p>Jumlah: <span id="display-amount">Rp 10.000</span></p>
+                    <p>Status: <span class="highlight">Menunggu Pembayaran</span></p>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instruksi Pembayaran:</h3>
+                    <ol>
+                        <li>Pilih metode pembayaran di sebelah kanan</li>
+                        <li>Lakukan pembayaran sesuai nominal yang tertera</li>
+                        <li>Simpan bukti pembayaran Anda</li>
+                        <li>Pembayaran akan diproses dalam 5-15 menit</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="payment-methods">
+                <h2 class="section-title">Metode Pembayaran</h2>
+
+                <div class="method" id="qris-method">
+                    <div class="method-header">
+                        <div class="method-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="method-title">QRIS</div>
+                    </div>
+                    <div class="method-details">
+                        <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS Code" class="qris-image">
+                        <p class="method-info">Scan QR code di atas untuk melakukan pembayaran</p>
+                    </div>
+                </div>
+
+                <div class="method" id="dana-method">
+                    <div class="method-header">
+                        <div class="method-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="method-title">DANA</div>
+                    </div>
+                    <div class="method-details">
+                        <p class="method-info">Kirim pembayaran ke nomor DANA:</p>
+                        <p class="method-info highlight">085714353387</p>
+                        <p class="method-info">a.n [Nama Pemilik]</p>
+                    </div>
+                </div>
+
+                <div class="method" id="gopay-method">
+                    <div class="method-header">
+                        <div class="method-icon">
+                            <i class="fab fa-google-wallet"></i>
+                        </div>
+                        <div class="method-title">GOPAY</div>
+                    </div>
+                    <div class="method-details">
+                        <p class="method-info">Kirim pembayaran ke nomor GOPAY:</p>
+                        <p class="method-info highlight">085714353387</p>
+                        <p class="method-info">a.n [Nama Pemilik]</p>
+                    </div>
+                </div>
+
+                <div class="method" id="ovo-method">
+                    <div class="method-header">
+                        <div class="method-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="method-title">OVO</div>
+                    </div>
+                    <div class="method-details">
+                        <p class="method-info">Kirim pembayaran ke nomor OVO:</p>
+                        <p class="method-info highlight">085714353387</p>
+                        <p class="method-info">a.n [Nama Pemilik]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 Payment Gateway. Untuk bantuan silakan hubungi customer service.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const amountInput = document.getElementById('amount');
+            const displayAmount = document.getElementById('display-amount');
+            const selectedMethod = document.getElementById('selected-method');
+            const methods = document.querySelectorAll('.method');
+            
+            // Format angka ke format Rupiah
+            function formatRupiah(amount) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(amount);
+            }
+            
+            // Update amount display
+            amountInput.addEventListener('input', function() {
+                displayAmount.textContent = formatRupiah(amountInput.value);
+            });
+            
+            // Method selection
+            methods.forEach(method => {
+                method.addEventListener('click', function() {
+                    // Remove active class from all methods
+                    methods.forEach(m => m.classList.remove('active'));
+                    
+                    // Add active class to clicked method
+                    this.classList.add('active');
+                    
+                    // Update selected method
+                    const methodName = this.querySelector('.method-title').textContent;
+                    selectedMethod.textContent = methodName;
+                });
+            });
+            
+            // Initialize with QRIS selected
+            document.getElementById('qris-method').click();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
