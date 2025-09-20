@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment DANA QRIS</title>
+    <title>Pembayaran DANA QRIS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -20,6 +20,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            color: #333;
         }
         
         .container {
@@ -28,7 +29,7 @@
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             padding: 30px;
             text-align: center;
             animation: fadeIn 0.8s ease-out;
@@ -73,6 +74,7 @@
             font-weight: 500;
             color: #333;
             margin-bottom: 15px;
+            font-size: 18px;
         }
         
         .qris-code {
@@ -83,6 +85,7 @@
             margin: 0 auto;
             display: block;
             border: 1px solid #eee;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .divider {
@@ -127,6 +130,7 @@
             font-family: monospace;
             font-size: 18px;
             color: #333;
+            letter-spacing: 1px;
         }
         
         .copy-btn {
@@ -136,13 +140,15 @@
             padding: 8px 15px;
             border-radius: 6px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
+            font-weight: 500;
         }
         
         .copy-btn:hover {
             background: #2575fc;
+            transform: scale(1.05);
         }
         
         .copy-btn i {
@@ -222,7 +228,7 @@
         
         <div class="qris-container">
             <div class="qris-title">QRIS Code Pembayaran</div>
-            <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS DANA" class="qris-code">
+            <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS DANA" class="qris-code" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=DANA:085714353387'">
         </div>
         
         <div class="divider"></div>
@@ -286,8 +292,9 @@
             };
             
             qrImage.onerror = function() {
-                console.log("Error saat memuat QR code");
-                document.querySelector('.qris-code').alt = "QR code tidak dapat dimuat. Silakan gunakan nomor DANA secara manual.";
+                console.log("Error saat memuat QR code, menggunakan fallback");
+                // Jika gambar QR code asli gagal dimuat, akan digantikan oleh fallback dari QR server
+                document.querySelector('.qris-code').src = "https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=DANA:085714353387";
             };
         });
     </script>
