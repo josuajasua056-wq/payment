@@ -3,147 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran DANA QRIS</title>
+    <title>Payment DANA - QRIS</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .container {
             padding: 20px;
         }
-
-        .card {
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px 30px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            max-width: 400px;
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        
+        .header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            padding: 25px;
+            text-align: center;
+            color: white;
         }
-
-        .title {
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #007bff;
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
-
-        .subtitle {
-            font-size: 1em;
-            color: #666;
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .payment-info {
+            text-align: center;
             margin-bottom: 25px;
         }
-
-        .qr-code-wrapper {
-            background-color: #f7f9fc;
-            border-radius: 10px;
-            padding: 10px;
-            display: inline-block;
-            border: 1px solid #e0e0e0;
+        
+        .payment-info h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 15px;
         }
-
-        .qr-code {
-            width: 250px;
-            height: auto;
-            border-radius: 8px;
+        
+        .qris-container {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
             transition: transform 0.3s ease;
         }
-
-        .qr-code:hover {
+        
+        .qris-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .qris-image {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .qris-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .qris-image:hover img {
             transform: scale(1.03);
         }
-
-        .info-box {
-            margin-top: 30px;
+        
+        .dana-number {
+            background: #f8f9fa;
             padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 10px;
-            border: 1px dashed #b3d9ff;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
-
-        .info-box p {
-            margin: 5px 0;
+        
+        .dana-number h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 10px;
         }
-
-        .phone-number {
-            font-size: 1.2em;
+        
+        .number {
+            font-size: 18px;
             font-weight: 600;
-            color: #0056b3;
-            word-break: break-all;
+            color: #2575fc;
+            letter-spacing: 1px;
+            padding: 10px;
+            background: rgba(37, 117, 252, 0.1);
+            border-radius: 8px;
+            display: inline-block;
         }
-
-        .copy-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+        
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
-
-        .copy-button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
+        
+        .instructions h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
         }
-
-        .copy-button:active {
-            transform: translateY(0);
+        
+        .instructions ol {
+            padding-left: 20px;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 12px;
+            background: #f8f9fa;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="card">
-            <h1 class="title">Scan untuk Membayar</h1>
-            <p class="subtitle">Pembayaran cepat dan aman via DANA QRIS.</p>
-            <div class="qr-code-wrapper">
-                <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS DANA" class="qr-code">
+        <div class="header">
+            <h1>Payment DANA QRIS</h1>
+            <p>Scan QRIS atau transfer ke nomor DANA berikut</p>
+        </div>
+        
+        <div class="content">
+            <div class="payment-info">
+                <h2>Total Pembayaran</h2>
+                <div class="amount">
+                    <h3>Masukkan jumlah pembayaran</h3>
+                </div>
             </div>
-            <div class="info-box">
-                <p>Nomor DANA:</p>
-                <p class="phone-number">085714353387</p>
-                <button class="copy-button" onclick="copyNumber()">Salin Nomor</button>
+            
+            <div class="qris-container">
+                <h3>Scan QRIS Dibawah Ini</h3>
+                <div class="qris-image">
+                    <img src="https://files.catbox.moe/o7wm8e.jpg" alt="QRIS DANA Payment" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=DANA://085714353387'">
+                </div>
+                <p>Gunakan aplikasi DANA atau bank lain untuk scan QRIS</p>
+            </div>
+            
+            <div class="dana-number">
+                <h3>Atau transfer ke nomor DANA</h3>
+                <div class="number">085714353387</div>
+                <p>a.n [Nama Pemilik DANA]</p>
+            </div>
+            
+            <div class="instructions">
+                <h3>Cara Pembayaran</h3>
+                <ol>
+                    <li>Buka aplikasi DANA atau mobile banking</li>
+                    <li>Pilih fitur QRIS atau scan QR code</li>
+                    <li>Arahkan kamera ke QR code di atas</li>
+                    <li>Masukkan jumlah pembayaran</li>
+                    <li>Konfirmasi dan selesaikan pembayaran</li>
+                </ol>
             </div>
         </div>
+        
+        <div class="footer">
+            <p>© 2023 Payment DANA QRIS. Pastikan jumlah pembayaran sudah sesuai.</p>
+        </div>
     </div>
-    <script>
-        function copyNumber() {
-            const phoneNumber = document.querySelector('.phone-number').textContent;
-            navigator.clipboard.writeText(phoneNumber).then(() => {
-                const button = document.querySelector('.copy-button');
-                button.textContent = 'Nomor Tersalin!';
-                setTimeout(() => {
-                    button.textContent = 'Salin Nomor';
-                }, 2000);
-            }).catch(err => {
-                console.error('Gagal menyalin: ', err);
-            });
-        }
-    </script>
 </body>
 </html>
