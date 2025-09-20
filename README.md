@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment DANA QRIS</title>
+    <title>Toko Barang Game - HD Quality</title>
     <style>
+        /* Reset dan base styles */
         * {
             margin: 0;
             padding: 0;
@@ -13,170 +14,289 @@
         }
         
         body {
-            background: linear-gradient(135deg, #ff4b4b 0%, #ffffff 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        /* Container utama */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
         }
         
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            width: 100%;
-            max-width: 450px;
+        /* Header */
+        header {
             text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .container:hover {
-            transform: translateY(-5px);
-        }
-        
-        .logo {
-            width: 120px;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out;
         }
         
         h1 {
-            color: #ff4b4b;
+            font-size: 2.5rem;
             margin-bottom: 10px;
-            font-size: 28px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         
-        p {
-            color: #555;
-            margin-bottom: 20px;
-            line-height: 1.6;
+        /* Grid barang */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
         
-        .qris-container {
-            padding: 15px;
-            background: white;
+        /* Kartu produk */
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-            display: inline-block;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.5s ease-out;
         }
         
-        .qris-code {
-            width: 250px;
-            height: 250px;
-            border-radius: 10px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
         }
         
-        .qris-code:hover {
-            transform: scale(1.03);
+        .product-header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .dana-number {
-            background: #f8f8f8;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 18px;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
         
-        .dana-icon {
-            width: 24px;
-            height: 24px;
+        .product-body {
+            padding: 20px;
         }
         
-        .instructions {
-            text-align: left;
-            background: #f0f8ff;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
+        .product-price {
+            font-size: 1.2rem;
+            color: #4ecca3;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
         }
         
-        .instructions h3 {
-            color: #ff4b4b;
-            margin-bottom: 10px;
+        .btn-show-price {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .instructions ol {
-            padding-left: 20px;
+        .btn-show-price:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         
-        .instructions li {
-            margin-bottom: 8px;
-            color: #555;
+        .btn-show-price:active {
+            transform: translateY(0);
         }
         
-        .note {
-            font-size: 14px;
-            color: #888;
-            margin-top: 20px;
-            font-style: italic;
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
             }
-            
-            .qris-code {
-                width: 200px;
-                height: 200px;
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
             }
             
             h1 {
-                font-size: 24px;
+                font-size: 2rem;
             }
+        }
+        
+        /* Efek smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Efek kilap pada kartu */
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .product-card:hover::before {
+            left: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="#ff4b4b" />
-            <text x="50" y="60" text-anchor="middle" fill="white" font-size="40" font-weight="bold">DANA</text>
-        </svg>
+        <header>
+            <h1>Katalog Barang Game</h1>
+            <p>Kualitas HD • Harga Terjangkau • Transaksi Aman</p>
+        </header>
         
-        <h1>Payment QRIS DANA</h1>
-        <p>Scan QR code di bawah ini untuk melakukan pembayaran melalui DANA</p>
-        
-        <div class="qris-container">
-            <img src="https://files.catbox.moe/o7wm8e.jpg" alt="QRIS DANA" class="qris-code">
+        <div class="products-grid">
+            <!-- Jasteb -->
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Jasteb</h3>
+                </div>
+                <div class="product-body">
+                    <p class="product-price" id="jasteb-price">
+                        1k = 20res<br>
+                        2k = 70res<br>
+                        3k = 90res<br>
+                        4k = 150res<br>
+                        5k = 250res
+                    </p>
+                    <button class="btn-show-price" onclick="togglePrice('jasteb-price', this)">Lihat Harga</button>
+                </div>
+            </div>
+            
+            <!-- Murlog -->
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Murlog</h3>
+                </div>
+                <div class="product-body">
+                    <p class="product-price" id="murlog-price">
+                        1k + Full Tutor = ?res
+                    </p>
+                    <button class="btn-show-price" onclick="togglePrice('murlog-price', this)">Lihat Harga</button>
+                </div>
+            </div>
+            
+            <!-- Mursun -->
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Mursun</h3>
+                </div>
+                <div class="product-body">
+                    <p class="product-price" id="mursun-price">
+                        1k + Full Tutor = ?res
+                    </p>
+                    <button class="btn-show-price" onclick="togglePrice('mursun-price', this)">Lihat Harga</button>
+                </div>
+            </div>
+            
+            <!-- SC Bug Dreadt Invictus -->
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">SC Bug Dreadt Invictus</h3>
+                </div>
+                <div class="product-body">
+                    <p class="product-price" id="scbug-price">
+                        Harga: 10k
+                    </p>
+                    <button class="btn-show-price" onclick="togglePrice('scbug-price', this)">Lihat Harga</button>
+                </div>
+            </div>
+            
+            <!-- Mod The Spike -->
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Mod The Spike</h3>
+                </div>
+                <div class="product-body">
+                    <p class="product-price" id="modspike-price">
+                        Harga: 5k
+                    </p>
+                    <button class="btn-show-price" onclick="togglePrice('modspike-price', this)">Lihat Harga</button>
+                </div>
+            </div>
+            
+            <!-- Crate Web Payment -->
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Crate Web Payment</h3>
+                </div>
+                <div class="product-body">
+                    <p class="product-price" id="crateweb-price">
+                        Harga: 3k
+                    </p>
+                    <button class="btn-show-price" onclick="togglePrice('crateweb-price', this)">Lihat Harga</button>
+                </div>
+            </div>
         </div>
-        
-        <div class="dana-number">
-            <svg class="dana-icon" viewBox="0 0 24 24" fill="#ff4b4b" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2V7zm0 8h2v2h-2v-2z"/>
-            </svg>
-            <span>085714353387</span>
-        </div>
-        
-        <div class="instructions">
-            <h3>Cara Pembayaran:</h3>
-            <ol>
-                <li>Buka aplikasi DANA di ponsel Anda</li>
-                <li>Ketuk tombol Bayar dan pilih Scan</li>
-                <li>Arahkan kamera ke QR code di atas</li>
-                <li>Masukkan jumlah nominal pembayaran</li>
-                <li>Konfirmasi dan selesaikan transaksi</li>
-            </ol>
-        </div>
-        
-        <p class="note">Pastikan saldo DANA Anda mencukupi sebelum melakukan pembayaran.</p>
     </div>
+
+    <script>
+        // Fungsi untuk menampilkan/sembunyikan harga
+        function togglePrice(priceId, button) {
+            const priceElement = document.getElementById(priceId);
+            
+            if (priceElement.style.display === 'block') {
+                priceElement.style.display = 'none';
+                button.textContent = 'Lihat Harga';
+            } else {
+                // Sembunyikan semua harga terlebih dahulu
+                document.querySelectorAll('.product-price').forEach(price => {
+                    price.style.display = 'none';
+                });
+                
+                // Ubah teks semua button kembali ke "Lihat Harga"
+                document.querySelectorAll('.btn-show-price').forEach(btn => {
+                    btn.textContent = 'Lihat Harga';
+                });
+                
+                // Tampilkan harga yang dipilih
+                priceElement.style.display = 'block';
+                button.textContent = 'Tutup';
+            }
+        }
+        
+        // Animasi untuk kartu produk
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+            
+            productCards.forEach((card, index) => {
+                // Delay munculnya animasi untuk setiap kartu
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
 </body>
 </html>
