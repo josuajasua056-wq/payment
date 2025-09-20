@@ -4,299 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pembayaran DANA QRIS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            height: 100vh;
+            margin: 0;
             color: #333;
+            animation: fadeIn 0.8s ease-in-out;
         }
-        
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 450px;
-            padding: 30px;
-            text-align: center;
-            animation: fadeIn 0.8s ease-out;
-        }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        
-        .logo {
-            width: 100px;
-            margin-bottom: 20px;
+
+        .container {
+            padding: 20px;
         }
-        
-        h1 {
-            color: #333;
+
+        .card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .title {
+            font-size: 2.2em;
+            font-weight: 700;
             margin-bottom: 10px;
-            font-weight: 600;
+            color: #007bff;
         }
-        
-        p {
+
+        .subtitle {
+            font-size: 1em;
             color: #666;
             margin-bottom: 25px;
-            line-height: 1.6;
         }
-        
-        .qris-container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin: 20px 0;
+
+        .qr-code-wrapper {
+            background-color: #f7f9fc;
+            border-radius: 10px;
+            padding: 10px;
+            display: inline-block;
+            border: 1px solid #e0e0e0;
+        }
+
+        .qr-code {
+            width: 250px;
+            height: auto;
+            border-radius: 8px;
             transition: transform 0.3s ease;
         }
-        
-        .qris-container:hover {
-            transform: translateY(-5px);
+
+        .qr-code:hover {
+            transform: scale(1.03);
         }
-        
-        .qris-title {
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        
-        .qris-code {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-            border-radius: 10px;
-            margin: 0 auto;
-            display: block;
-            border: 1px solid #eee;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, #ddd, transparent);
-            margin: 25px 0;
-        }
-        
-        .payment-info {
-            background: #f8f9fa;
+
+        .info-box {
+            margin-top: 30px;
             padding: 15px;
-            border-radius: 12px;
-            margin: 20px 0;
-            text-align: left;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            border: 1px dashed #b3d9ff;
         }
-        
-        .info-title {
-            font-weight: 500;
-            color: #444;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
+
+        .info-box p {
+            margin: 5px 0;
         }
-        
-        .info-title i {
-            margin-right: 10px;
-            color: #6a11cb;
+
+        .phone-number {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #0056b3;
+            word-break: break-all;
         }
-        
-        .dana-number {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .number {
-            font-family: monospace;
-            font-size: 18px;
-            color: #333;
-            letter-spacing: 1px;
-        }
-        
-        .copy-btn {
-            background: #6a11cb;
+
+        .copy-button {
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 10px 20px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            font-weight: 500;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        
-        .copy-btn:hover {
-            background: #2575fc;
-            transform: scale(1.05);
+
+        .copy-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
         }
-        
-        .copy-btn i {
-            margin-right: 5px;
-        }
-        
-        .instructions {
-            text-align: left;
-            margin: 25px 0;
-        }
-        
-        .instructions ol {
-            padding-left: 20px;
-            color: #666;
-        }
-        
-        .instructions li {
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-        
-        .note {
-            background: #fff8e1;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #ffc107;
-            text-align: left;
-            margin: 20px 0;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .success-message {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #4caf50;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .success-message.show {
-            opacity: 1;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .dana-number {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .copy-btn {
-                width: 100%;
-                justify-content: center;
-            }
+
+        .copy-button:active {
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Pembayaran DANA QRIS</h1>
-        <p>Scan QR code berikut atau salin nomor DANA untuk melakukan pembayaran</p>
-        
-        <div class="qris-container">
-            <div class="qris-title">QRIS Code Pembayaran</div>
-            <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS DANA" class="qris-code" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=DANA:085714353387'">
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="payment-info">
-            <div class="info-title"><i class="fas fa-wallet"></i> Nomor DANA</div>
-            <div class="dana-number">
-                <span class="number" id="danaNumber">085714353387</span>
-                <button class="copy-btn" id="copyButton"><i class="fas fa-copy"></i> Salin</button>
+        <div class="card">
+            <h1 class="title">Scan untuk Membayar</h1>
+            <p class="subtitle">Pembayaran cepat dan aman via DANA QRIS.</p>
+            <div class="qr-code-wrapper">
+                <img src="https://files.catbox.moe/7yokm2.jpg" alt="QRIS DANA" class="qr-code">
+            </div>
+            <div class="info-box">
+                <p>Nomor DANA:</p>
+                <p class="phone-number">085714353387</p>
+                <button class="copy-button" onclick="copyNumber()">Salin Nomor</button>
             </div>
         </div>
-        
-        <div class="instructions">
-            <div class="info-title"><i class="fas fa-info-circle"></i> Cara Pembayaran:</div>
-            <ol>
-                <li>Buka aplikasi DANA di smartphone Anda</li>
-                <li>Tap ikon QR di bagian atas halaman utama</li>
-                <li>Scan QR code yang tertera di atas</li>
-                <li>Atau transfer manual ke nomor DANA yang tertera</li>
-                <li>Masukkan jumlah nominal yang ingin ditransfer</li>
-                <li>Konfirmasi dan masukkan PIN DANA Anda</li>
-            </ol>
-        </div>
-        
-        <div class="note">
-            <strong>Catatan:</strong> Pastikan saldo DANA Anda mencukupi. Pembayaran akan diproses secara instan setelah transfer berhasil.
-        </div>
     </div>
-    
-    <div class="success-message" id="successMessage">Nomor DANA berhasil disalin!</div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const copyButton = document.getElementById('copyButton');
-            const danaNumber = document.getElementById('danaNumber');
-            const successMessage = document.getElementById('successMessage');
-            
-            copyButton.addEventListener('click', function() {
-                const tempTextArea = document.createElement('textarea');
-                tempTextArea.value = danaNumber.textContent;
-                document.body.appendChild(tempTextArea);
-                tempTextArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempTextArea);
-                
-                // Tampilkan pesan sukses
-                successMessage.classList.add('show');
-                
-                // Sembunyikan pesan setelah 3 detik
-                setTimeout(function() {
-                    successMessage.classList.remove('show');
-                }, 3000);
+        function copyNumber() {
+            const phoneNumber = document.querySelector('.phone-number').textContent;
+            navigator.clipboard.writeText(phoneNumber).then(() => {
+                const button = document.querySelector('.copy-button');
+                button.textContent = 'Nomor Tersalin!';
+                setTimeout(() => {
+                    button.textContent = 'Salin Nomor';
+                }, 2000);
+            }).catch(err => {
+                console.error('Gagal menyalin: ', err);
             });
-            
-            // Preload gambar QR code untuk menghindari error
-            const qrImage = new Image();
-            qrImage.src = "https://files.catbox.moe/7yokm2.jpg";
-            
-            qrImage.onload = function() {
-                console.log("QR code berhasil dimuat");
-            };
-            
-            qrImage.onerror = function() {
-                console.log("Error saat memuat QR code, menggunakan fallback");
-                // Jika gambar QR code asli gagal dimuat, akan digantikan oleh fallback dari QR server
-                document.querySelector('.qris-code').src = "https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=DANA:085714353387";
-            };
-        });
+        }
     </script>
 </body>
 </html>
